@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 移动端自适应 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>聚合导航站 | 音乐·图书馆·文化</title>
+    <!-- Python123同款简约清新样式 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f7f9fc;
+            color: #333;
+            line-height: 1.6;
+        }
+        /* 顶部导航栏 Python123 浅蓝风格 */
+        header {
+            background: #409eff;
+            box-shadow: 0 2px 8px rgba(64, 158, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo {
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+            padding: 16px 0;
+            margin-right: 40px;
+        }
+        .nav-list {
+            display: flex;
+            list-style: none;
+        }
+        .nav-list li a {
+            display: block;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            padding: 18px 22px;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .nav-list li a:hover,
+        .nav-list li a.active {
+            background: rgba(255,255,255,0.15);
+            color: #fff;
+        }
+        /* 主体容器 */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        /* 板块卡片 圆角简约 复刻Python123卡片 */
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 1px 12px rgba(0,0,0,0.06);
+        }
+        .card h2 {
+            color: #409eff;
+            margin-bottom: 20px;
+            border-left: 4px solid #409eff;
+            padding-left: 12px;
+        }
+        .desc-text {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        /* 跳转按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            background: #409eff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: 0.2s;
+            margin-right: 12px;
+            margin-bottom: 10px;
+        }
+        .btn:hover {
+            background: #337ecc;
+        }
+        .btn-gray {
+            background: #909399;
+        }
+        .btn-gray:hover {
+            background: #73767a;
+        }
+        /* 文件下载区域样式 */
+        .download-box {
+            background: #ecf5ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        .download-box h4 {
+            color: #409eff;
+            margin-bottom: 12px;
+        }
+        /* iframe嵌入容器 */
+        .iframe-wrap {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #e4e7ed;
+            border-radius: 6px;
+            margin-top: 15px;
+        }
+        /* 底部版权 */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+            font-size: 14px;
+        }
+        /* 移动端适配 */
+        @media (max-width:768px) {
+            .nav-container {
+                flex-direction: column;
+            }
+            .nav-list {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .iframe-wrap {
+                height: 400px;
+            }
+        }
+        /* 板块内容 默认隐藏，点击导航切换 */
+        .page-content {
+            display: none;
+        }
+        .page-content.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">XY聚合导航平台</div>
+            <ul class="nav-list">
+                <li><a href="#" class="nav-link active" data-target="home">主页</a></li>
+                <li><a href="#" class="nav-link" data-target="library">图书馆</a></li>
+                <li><a href="#" class="nav-link" data-target="culture">文化</a></li>
+                <li><a href="#" class="nav-link" data-target="edu">教育</a></li>
+                <li><a href="#" class="nav-link" data-target="game">娱乐</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 1. 主页板块 -->
+        <div id="home" class="page-content show">
+            <div class="card">
+                <h2>平台总览 - 聚合三大站点</h2>
+                <p class="desc-text">本平台仅为导航聚合页面，下方站点域名版权归属 mysxl.cn 公司，点击按钮可新窗口访问对应官网</p>
+                <a href="https://xymusicjerryhoz.mysxl.cn/" target="_blank" class="btn">XY音乐官网</a>
+                <a href="https://ullibrary.mysxl.cn/" target="_blank" class="btn">图书馆官网</a>
+                <a href="https://yanzicai.mysxl.cn/" target="_blank" class="btn">燕子财文化官网</a>
+
+                <!-- ========== 文件下载功能演示区域 ========== -->
+                <div class="download-box">
+                    <h4>文件下载功能示例（两种写法）</h4>
+                    <p>方式1：下载外链文件（网络资源）</p>
+                    <!-- download属性强制浏览器弹出下载，而非在线打开 -->
+                    <a href="https://example.com/demo.pdf" download="演示文档.pdf" class="btn">下载PDF演示文件</a>
+
+                    <p style="margin-top:10px;">方式2：下载网站本地存放文件（需上传文件到服务器）</p>
+                    <a href="./files/软件安装包.zip" download="XY工具包.zip" class="btn btn-gray">下载本地压缩包</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. 图书馆板块 绑定 ullibrary.mysxl.cn -->
+        <div id="library" class="page-content">
+            <div class="card">
+                <h2>图书馆板块</h2>
+                <p class="desc-text">第三方站点：ullibrary.mysxl.cn（版权归sxl.cn所有）</p>
+                <a href="https://ullibrary.mysxl.cn/" target="_blank" class="btn">新标签页打开图书馆</a>
+                <p style="margin:10px 0;">嵌入预览（部分服务器存在跨域限制无法加载，打不开就用上方按钮跳转）</p>
+                <iframe class="iframe-wrap" src="https://ullibrary.mysxl.cn/" sandbox></iframe>
+            </div>
+        </div>
+
+        <!-- 3. 文化板块 绑定 yanzicai.mysxl.cn -->
+        <div id="culture" class="page-content">
+            <div class="card">
+                <h2>文化板块 - 燕子财</h2>
+                <p class="desc-text">第三方站点：yanzicai.mysxl.cn（版权归sxl.cn所有）</p>
+                <a href="https://yanzicai.mysxl.cn/" target="_blank" class="btn">新标签页打开文化站</a>
+                <iframe class="iframe-wrap" src="https://yanzicai.mysxl.cn/" sandbox></iframe>
+            </div>
+        </div>
+
+        <!-- 4. 教育板块（预留空白，自行填充内容） -->
+        <div id="edu" class="page-content">
+            <div class="card">
+                <h2>教育板块</h2>
+                <p class="desc-text">待开发：课程、习题、教学资料、学习工具</p>
+                <!-- 这里可以添加更多下载链接、教学资源 -->
+                <div class="download-box">
+                    <h4>教育资料下载区</h4>
+                    <a href="./files/课件.docx" download="基础教学课件.docx" class="btn">下载教学课件</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. 娱乐板块（预留空白，自行填充内容） -->
+        <div id="game" class="page-content">
+            <div class="card">
+                <h2>娱乐板块</h2>
+                <p class="desc-text">待开发：影音、休闲工具、素材资源</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>聚合导航页面 | 第三方站点版权归属 mysxl.cn 公司 | 仅作导航展示，不持有第三方内容版权</p>
+    </footer>
+
+    <!-- 导航切换JS代码 -->
+    <script>
+        // 获取所有导航按钮和板块容器
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page-content');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                // 清除所有激活状态
+                navLinks.forEach(item => item.classList.remove('active'));
+                pages.forEach(page => page.classList.remove('show'));
+                // 当前导航激活
+                this.classList.add('active');
+                // 展示对应板块
+                const targetId = this.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('show');
+            })
+        })
+    </script>
+</body>
+</html>
