@@ -3,73 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>吴兆宇的数字空间</title>
+    <title>吴兆宇的数字聚合空间</title>
+    <!-- 引入Google字体，提升质感 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 基础设置 */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: #fdfbf7; color: #333; line-height: 1.6; }
-        
-        /* 毛玻璃导航 */
-        header { position: fixed; top: 0; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(253, 251, 247, 0.8); backdrop-filter: blur(10px); z-index: 1000; }
-        nav a { margin-left: 20px; text-decoration: none; color: #555; font-weight: 500; transition: 0.3s; }
-        nav a:hover { color: #8a6d3b; }
-
-        /* 首屏展示 */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
-        .hero h1 { font-size: 3rem; margin-bottom: 20px; color: #2c3e50; }
-        .hero p { max-width: 600px; font-size: 1.2rem; color: #666; }
-
-        /* 版块布局 */
-        .section { padding: 80px 50px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); }
-        .card h3 { margin-bottom: 15px; color: #8a6d3b; }
-
-        footer { text-align: center; padding: 40px; font-size: 0.9rem; color: #999; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Sans SC', sans-serif; }
+        body { background-color: #f4f7f6; color: #333; line-height: 1.6; }
+        header { background: #2c3e50; color: #fff; padding: 20px 0; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-container { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .nav-list { display: flex; list-style: none; }
+        .nav-list li a { color: #bdc3c7; text-decoration: none; padding: 10px 15px; cursor: pointer; transition: 0.3s; }
+        .nav-list li a:hover, .nav-list li a.active { color: #fff; background: #34495e; border-radius: 5px; }
+        .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; min-height: 60vh; }
+        .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 30px; }
+        .btn { display: inline-block; padding: 10px 20px; background: #3498db; color: #fff; text-decoration: none; border-radius: 6px; margin: 5px; transition: 0.3s; }
+        .btn:hover { background: #2980b9; }
+        .page-content { display: none; }
+        .page-content.show { display: block; }
+        footer { text-align: center; padding: 40px; color: #7f8c8d; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
 <header>
-    <h2>吴兆宇的数字空间</h2>
-    <nav>
-        <a href="#home">主页</a>
-        <a href="#library">图书馆</a>
-        <a href="#culture">文化</a>
-        <a href="#education">教育</a>
-        <a href="#entertainment">娱乐</a>
-    </nav>
+    <div class="nav-container">
+        <h2>吴兆宇的数字空间</h2>
+        <ul class="nav-list">
+            <li><a class="nav-link active" data-target="home">主页</a></li>
+            <li><a class="nav-link" data-target="library">图书馆</a></li>
+            <li><a class="nav-link" data-target="culture">文化</a></li>
+            <li><a class="nav-link" data-target="edu">教育</a></li>
+            <li><a class="nav-link" data-target="game">娱乐</a></li>
+        </ul>
+    </div>
 </header>
 
-<section id="home" class="hero">
-    <h1>岁月不老，学无止境</h1>
-    <p>我是一位已至耄耋之年的探索者。搭建这个数字小站，并非为了追赶潮流，而是想将一生所藏的书香、文化记忆，以及对生活的热爱与诸位分享。</p>
-</section>
-
-<section id="library" class="section">
-    <h2>图书馆</h2>
-    <div class="grid">
-        <div class="card"><h3>古籍珍藏</h3><p>点击访问我的数字图书馆内容。</p><a href="https://ullibrary.mysxl.cn/">点击进入</a></div>
+<div class="container">
+    <!-- 主页 -->
+    <div id="home" class="page-content show">
+        <div class="card">
+            <h1>欢迎来到我的数字港湾</h1>
+            <p style="margin:20px 0;">这里汇集了我一生积淀的书香与文化。请通过导航栏选择您想前往的板块。</p>
+            <img src="https://images.unsplash.com/photo-1497633762265-9d176840742d?w=800" style="width:100%; border-radius:10px;">
+        </div>
     </div>
-</section>
+    
+    <!-- 其余板块结构与JS切换逻辑同上，您只需在下方对应的div中填充文字即可 -->
+    <div id="library" class="page-content"><div class="card"><h2>图书馆</h2><a href="https://ullibrary.mysxl.cn/" class="btn" target="_blank">访问图书馆</a></div></div>
+    <div id="culture" class="page-content"><div class="card"><h2>文化</h2><a href="https://yanzicai.mysxl.cn/" class="btn" target="_blank">访问文化馆</a></div></div>
+    <div id="edu" class="page-content"><div class="card"><h2>教育</h2><p>教学资料整理中...</p><a href="./myfile.pdf" download class="btn">下载课件</a></div></div>
+    <div id="game" class="page-content"><div class="card"><h2>娱乐</h2><a href="https://xymusicjerryhoz.mysxl.cn/" class="btn" target="_blank">访问音乐空间</a></div></div>
+</div>
 
-<section id="culture" class="section">
-    <h2>文化</h2>
-    <div class="grid">
-        <div class="card"><h3>文化记忆</h3><p>探索我整理的文化底蕴与传承。</p><a href="https://yanzicai.mysxl.cn/">点击进入</a></div>
-    </div>
-</section>
-
-<section id="education" class="section">
-    <h2>教育与娱乐</h2>
-    <div class="grid">
-        <div class="card"><h3>教育专栏</h3><p>分享知识与学习的心得。</p></div>
-        <div class="card"><h3>娱乐空间</h3><p>我的音乐收藏与生活感悟。<br><a href="https://xymusicjerryhoz.mysxl.cn/">点击进入</a></p></div>
-    </div>
-</section>
-
-<footer>&copy; 2026 吴兆宇 版权所有</footer>
-
+<script>
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('show'));
+            this.classList.add('active');
+            document.getElementById(this.dataset.target).classList.add('show');
+        });
+    });
+</script>
 </body>
 </html>
