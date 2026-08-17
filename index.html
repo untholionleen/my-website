@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>吴兆宇的数字空间</title>
+    <style>
+        /* 基础设置 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: #fdfbf7; color: #333; line-height: 1.6; }
+        
+        /* 毛玻璃导航 */
+        header { position: fixed; top: 0; width: 100%; padding: 20px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(253, 251, 247, 0.8); backdrop-filter: blur(10px); z-index: 1000; }
+        nav a { margin-left: 20px; text-decoration: none; color: #555; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #8a6d3b; }
+
+        /* 首屏展示 */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; color: #2c3e50; }
+        .hero p { max-width: 600px; font-size: 1.2rem; color: #666; }
+
+        /* 版块布局 */
+        .section { padding: 80px 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); }
+        .card h3 { margin-bottom: 15px; color: #8a6d3b; }
+
+        footer { text-align: center; padding: 40px; font-size: 0.9rem; color: #999; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h2>吴兆宇的数字空间</h2>
+    <nav>
+        <a href="#home">主页</a>
+        <a href="#library">图书馆</a>
+        <a href="#culture">文化</a>
+        <a href="#education">教育</a>
+        <a href="#entertainment">娱乐</a>
+    </nav>
+</header>
+
+<section id="home" class="hero">
+    <h1>岁月不老，学无止境</h1>
+    <p>我是一位已至耄耋之年的探索者。搭建这个数字小站，并非为了追赶潮流，而是想将一生所藏的书香、文化记忆，以及对生活的热爱与诸位分享。</p>
+</section>
+
+<section id="library" class="section">
+    <h2>图书馆</h2>
+    <div class="grid">
+        <div class="card"><h3>古籍珍藏</h3><p>点击访问我的数字图书馆内容。</p><a href="https://ullibrary.mysxl.cn/">点击进入</a></div>
+    </div>
+</section>
+
+<section id="culture" class="section">
+    <h2>文化</h2>
+    <div class="grid">
+        <div class="card"><h3>文化记忆</h3><p>探索我整理的文化底蕴与传承。</p><a href="https://yanzicai.mysxl.cn/">点击进入</a></div>
+    </div>
+</section>
+
+<section id="education" class="section">
+    <h2>教育与娱乐</h2>
+    <div class="grid">
+        <div class="card"><h3>教育专栏</h3><p>分享知识与学习的心得。</p></div>
+        <div class="card"><h3>娱乐空间</h3><p>我的音乐收藏与生活感悟。<br><a href="https://xymusicjerryhoz.mysxl.cn/">点击进入</a></p></div>
+    </div>
+</section>
+
+<footer>&copy; 2026 吴兆宇 版权所有</footer>
+
+</body>
+</html>
