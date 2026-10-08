@@ -1,299 +1,514 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>吴兆宇的数字空间</title>
+    <title>小吴要上天大 - 吴兆宇的数字空间</title>
+    <!-- 引入 Tailwind CSS v4 -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- 引入 FontAwesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- 引入 Alpine.js 响应式状态管理 -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
-        /* 基础设置 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
-            background-color: #fdfbf7;
-            color: #333;
-            line-height: 1.75;
-        }
-
-        /* 毛玻璃导航栏 增强版 */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            padding: 18px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(253, 251, 247, 0.72);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 2px 14px rgba(138, 109, 59, 0.08);
-            z-index: 1000;
-        }
-        header h2 {
-            color: #2c3e50;
-            font-size: 1.4rem;
-        }
-        nav a {
-            margin-left: 24px;
-            text-decoration: none;
-            color: #555;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: 0.3s ease;
-        }
-        nav a:hover {
-            color: #8a6d3b;
-        }
-        nav a.active {
-            color: #8a6d3b;
-            border-bottom: 2px solid #8a6d3b;
-        }
-
-        /* 首屏Hero区域 */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 24px;
-            padding-top: 80px;
-        }
-        .hero h1 {
-            font-size: 3.2rem;
-            margin-bottom: 24px;
-            color: #2c3e50;
-        }
-        .hero p {
-            max-width: 680px;
-            font-size: 1.22rem;
-            color: #666;
-        }
-
-        /* 版块通用样式 */
-        .section {
-            padding: 90px 50px;
-            max-width: 1300px;
-            margin: 0 auto;
-        }
-        .section>h2 {
-            font-size: 2rem;
-            color: #2c3e50;
-            margin-bottom: 12px;
-            border-left: 5px solid #8a6d3b;
-            padding-left:14px;
-        }
-        .section>p.desc-lead {
-            color:#777;
-            margin-bottom:36px;
-        }
-
-        /* 网格卡片布局 */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-        }
-        .card {
-            background: #ffffff;
-            padding: 34px;
-            border-radius: 18px;
-            box-shadow: 0 10px 32px rgba(0,0,0,0.06);
-            transition: 0.32s ease;
-        }
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 16px 40px rgba(138,109,59,0.11);
-        }
-        .card h3 {
-            margin-bottom:16px;
-            color: #8a6d3b;
-            font-size:1.35rem;
-        }
-
-        /* 内容块：存放从外部网站搬入的文字 */
-        .content-block {
-            margin-top:18px;
-            padding:22px;
-            background-color:#f8f5ee;
-            border-radius:12px;
-            color:#444;
-        }
-        .content-block p {
-            margin-bottom:12px;
-        }
-
-        /* 按钮样式 */
-        .btn {
-            display:inline-block;
-            margin-top:14px;
-            padding:10px 22px;
-            background:#8a6d3b;
-            color:#fff;
-            text-decoration:none;
-            border-radius:8px;
-            transition:0.28s;
-        }
-        .btn:hover {
-            background:#6d542d;
-        }
-        .btn-light {
-            background:#b8a384;
-        }
-        .btn-light:hover {
-            background:#9c8667;
-        }
-
-        /* 文件下载模块 */
-        .download-wrap {
-            margin-top:20px;
-            padding:18px;
-            background:#f1ece2;
-            border-radius:12px;
-        }
-        .download-wrap h4 {
-            color:#8a6d3b;
-            margin-bottom:10px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 42px 20px;
-            font-size: 0.92rem;
-            color: #999;
-            background:#f4efe6;
-        }
-
-        /* 移动端适配 */
-        @media (max-width:768px){
-            header {
-                padding:14px 20px;
-                flex-direction:column;
-                gap:10px;
-            }
-            nav a {
-                margin:0 8px;
-                font-size:0.9rem;
-            }
-            .hero h1 {
-                font-size:2.1rem;
-            }
-            .section {
-                padding:60px 22px;
-            }
-            .grid {
-                grid-template-columns:1fr;
-            }
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+        .gov-blue { background-color: #004ea2; }
+        .gov-blue-hover:hover { background-color: #003b7a; }
+        .gov-text-blue { color: #004ea2; }
+        .chaoxing-card { transition: all 0.2s ease-in-out; }
+        .chaoxing-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.08); }
     </style>
 </head>
-<body>
-<header>
-    <h2>吴兆宇的数字空间</h2>
-    <nav>
-        <a href="#home">主页</a>
-        <a href="#library">图书馆</a>
-        <a href="#culture">文化</a>
-        <a href="#education">教育</a>
-        <a href="#entertainment">娱乐</a>
-    </nav>
-</header>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col justify-between" x-data="portalApp()">
 
-<section id="home" class="hero">
-    <h1>岁月不老，学无止境</h1>
-    <p>我是吴兆宇（Untholion Leen），出生于广东汕头南澳。搭建这个数字小站，希望将音乐、书香、潮汕文化记忆，以及学习思考与大家分享。坚守向上向善，心系家国，在学习实践中不断成长。</p>
-    <div style="margin-top:32px;">
-        <a href="#library" class="btn">前往图书馆</a>
-        <a href="#culture" class="btn btn-light">浏览文化专栏</a>
-    </div>
-</section>
-
-<section id="library" class="section">
-    <h2>图书馆</h2>
-    <p class="desc-lead">数字图书馆，汇集阅读摘抄、文章文稿、资料文档，来源于 ullibrary.mysxl.cn</p>
-    <div class="grid">
-        <div class="card">
-            <h3>古籍珍藏 & 文稿资料库</h3>
-            <p>这里收录读书笔记、散文文稿、参考资料，提供在线阅读与文件下载。</p>
-            <div class="content-block">
-                <p>本数字图书馆致力于保存各类阅读素材，既有传统文学片段，也包含现代社会观察文章。</p>
-                <p>希望可以给爱好者提供查阅参考，拓展阅读视野，感受文字带来的力量。</p>
-                <p>欢迎前往原网站浏览完整内容。</p>
+    <!-- 顶栏：政务与校园统一标识 -->
+    <div>
+        <div class="bg-gray-100 border-b border-gray-200 text-xs text-gray-600 py-1.5 px-4 sm:px-10 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <span><i class="fa-solid fa-landmark text-blue-800 mr-1"></i> 欢迎来到 “小吴要上天大” 综合事务与学习门户</span>
+                <span class="hidden sm:inline">|</span>
+                <span class="hidden sm:inline">让数字化记录我们的点点滴滴</span>
             </div>
-            <a href="https://ullibrary.mysxl.cn/" target="_blank" class="btn">访问原图书馆站点</a>
-
-            <!-- 文件下载示例 -->
-            <div class="download-wrap">
-                <h4>📂 资料下载区</h4>
-                <a href="./files/读书笔记.pdf" download="读书笔记.pdf" class="btn">下载读书笔记PDF</a>
+            <div class="flex items-center space-x-3">
+                <span class="text-blue-700 font-medium"><i class="fa-solid fa-user-shield mr-1"></i> 开发者：吴兆宇 (Untholion Leen)</span>
+                <span>|</span>
+                <a href="#lucky-day" @click="activeTab = 'lucky'" class="hover:text-blue-700 text-amber-600 font-bold">✨ My Lucky Day 规划</a>
+                <span>|</span>
+                <a href="#sitemap" @click="activeTab = 'sitemap'" class="hover:text-blue-700">网站地图</a>
             </div>
         </div>
-    </div>
-</section>
 
-<section id="culture" class="section">
-    <h2>文化</h2>
-    <p class="desc-lead">潮汕文化专栏，内容来源 yanzicai.mysxl.cn，关注本土文化保护与传承</p>
-    <div class="grid">
-        <div class="card">
-            <h3>潮汕文化记忆</h3>
-            <p>记录潮汕风土、民俗思考，呼吁尊重潮汕本土文化。</p>
-            <div class="content-block">
-                <p>潮汕文化是岭南重要的分支，承载着海内外潮汕人的共同情感。面对网络上出现抨击、消解本土文化的现象，我们应当主动守护这份文化根基。</p>
-                <p>汕头作为经济特区，可以吸纳各地人才，科学协调现代化建设与潮汕传统文化发展。</p>
-                <p>同时关注网络暴力、校园相关社会议题，希望用思考和建议推动社会向好。</p>
+        <!-- 主头部：LOGO 与 智能大搜索 -->
+        <header class="gov-blue text-white shadow-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-10 py-5 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                <div class="flex items-center space-x-3 cursor-pointer" @click="activeTab = 'home'">
+                    <div class="bg-white text-blue-900 font-bold text-2xl px-3 py-1.5 rounded shadow">
+                        <i class="fa-solid fa-rocket"></i> 小吴
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-wider">小吴要上天大 · 事务与学术中心</h1>
+                        <p class="text-xs text-blue-200">Wu Zhaoyu's Academic & Government Service Portal</p>
+                    </div>
+                </div>
+                <!-- 智能站内搜索框 -->
+                <div class="w-full md:w-5/12 relative">
+                    <div class="flex shadow-sm rounded-md overflow-hidden">
+                        <input type="text" x-model="searchQuery" @keyup.enter="performSearch" placeholder="全网检索：输入课程、制度、潮汕文化、Minecraft..." class="w-full py-2.5 px-4 text-gray-800 bg-white focus:outline-none text-sm">
+                        <button @click="performSearch" class="bg-amber-500 hover:bg-amber-600 text-white px-6 font-medium text-sm transition flex items-center justify-center cursor-pointer">
+                            <i class="fa-solid fa-magnifying-glass mr-1.5"></i> 智能搜索
+                        </button>
+                    </div>
+                </div>
             </div>
-            <a href="https://yanzicai.mysxl.cn/" target="_blank" class="btn">访问原文化站点</a>
+        </header>
+
+        <!-- 导航菜单 -->
+        <nav class="bg-white border-b border-gray-200 shadow-xs sticky top-0 z-40">
+            <div class="max-w-7xl mx-auto px-4 sm:px-10 flex space-x-6 text-sm font-medium overflow-x-auto">
+                <button @click="activeTab = 'home'" :class="activeTab === 'home' ? 'border-blue-800 gov-text-blue font-bold' : 'border-transparent text-gray-600 hover:gov-text-blue'" class="py-3.5 border-b-2 whitespace-nowrap cursor-pointer">首 页</button>
+                <button @click="activeTab = 'edu'" :class="activeTab === 'edu' ? 'border-blue-800 gov-text-blue font-bold' : 'border-transparent text-gray-600 hover:gov-text-blue'" class="py-3.5 border-b-2 whitespace-nowrap cursor-pointer">教育与思想</button>
+                <button @click="activeTab = 'life'" :class="activeTab === 'life' ? 'border-blue-800 gov-text-blue font-bold' : 'border-transparent text-gray-600 hover:gov-text-blue'" class="py-3.5 border-b-2 whitespace-nowrap cursor-pointer">文娱与健康</button>
+                <button @click="activeTab = 'service'" :class="activeTab === 'service' ? 'border-blue-800 gov-text-blue font-bold' : 'border-transparent text-gray-600 hover:gov-text-blue'" class="py-3.5 border-b-2 whitespace-nowrap cursor-pointer">实际与事务</button>
+                <button @click="activeTab = 'lucky'" :class="activeTab === 'lucky' ? 'border-amber-500 text-amber-600 font-bold' : 'border-transparent text-gray-600 hover:text-amber-600'" class="py-3.5 border-b-2 whitespace-nowrap cursor-pointer">✨ My Lucky Day</button>
+                <button @click="activeTab = 'sitemap'" :class="activeTab === 'sitemap' ? 'border-blue-800 gov-text-blue font-bold' : 'border-transparent text-gray-600 hover:gov-text-blue'" class="py-3.5 border-b-2 whitespace-nowrap cursor-pointer">网站地图 & 思维导图</button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 主体内容区 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-10 py-8 w-full flex-grow">
+
+        <!-- ================= 1. 首页视图 ================= -->
+        <div x-show="activeTab === 'home'" class="space-y-8">
+            <!-- 个人简介与百科嵌入卡片 (对照图1 & 图2) -->
+            <div class="bg-white p-6 sm:p-8 rounded-xl border border-gray-200 shadow-sm grid grid-cols-1 md:grid-cols-4 gap-6 items-center">
+                <div class="text-center md:text-left">
+                    <div class="w-32 h-32 mx-auto md:mx-0 rounded-lg overflow-hidden border-2 border-blue-800 shadow bg-gray-100 flex items-center justify-center">
+                        <i class="fa-solid fa-user-graduate text-5xl text-blue-800"></i>
+                    </div>
+                    <h2 class="text-xl font-bold mt-3 text-gray-900">吴兆宇</h2>
+                    <p class="text-xs text-gray-500">小宇音乐 (汕头市) 有限公司股东</p>
+                </div>
+                <div class="md:col-span-3 space-y-3 text-sm text-gray-700 border-t md:border-t-0 md:border-l border-gray-200 md:pl-6 pt-4 md:pt-0">
+                    <h3 class="font-bold text-base text-blue-900 flex items-center"><i class="fa-solid id-card mr-2"></i> 个人简介与社会任职</h3>
+                    <p>出生于2007年7月15日，广东省汕头市潮南区雷岭镇人。曾就读于汕头金山南海实验学校。现致力于化工热力学、细胞生物学及前端融合门户开发。</p>
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <span class="bg-blue-50 text-blue-800 text-xs px-2.5 py-1 rounded border border-blue-200">小宇音乐股东</span>
+                        <span class="bg-blue-50 text-blue-800 text-xs px-2.5 py-1 rounded border border-blue-200">天津大学化工学子</span>
+                        <span class="bg-blue-50 text-blue-800 text-xs px-2.5 py-1 rounded border border-blue-200">天津仁爱学院互助学习</span>
+                        <span class="bg-amber-50 text-amber-800 text-xs px-2.5 py-1 rounded border border-amber-200">✨ 每年11月12日 My Lucky Day</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 快捷入口卡片 (学习通网课风格) -->
+            <div>
+                <h3 class="text-lg font-bold text-gray-900 border-l-4 border-blue-800 pl-3 mb-4">核心高频导航</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                    <div @click="activeTab = 'edu'" class="bg-white p-5 rounded-lg border border-gray-200 text-center hover:shadow-md transition cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-blue-50 text-blue-700 rounded-full flex items-center justify-center text-xl group-hover:bg-blue-800 group-hover:text-white transition">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">教育与思想</span>
+                    </div>
+                    <div @click="activeTab = 'life'" class="bg-white p-5 rounded-lg border border-gray-200 text-center hover:shadow-md transition cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-blue-50 text-blue-700 rounded-full flex items-center justify-center text-xl group-hover:bg-blue-800 group-hover:text-white transition">
+                            <i class="fa-solid fa-gamepad"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">文娱与健康</span>
+                    </div>
+                    <div @click="activeTab = 'service'" class="bg-white p-5 rounded-lg border border-gray-200 text-center hover:shadow-md transition cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-blue-50 text-blue-700 rounded-full flex items-center justify-center text-xl group-hover:bg-blue-800 group-hover:text-white transition">
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">实际与事务</span>
+                    </div>
+                    <div @click="activeTab = 'lucky'" class="bg-white p-5 rounded-lg border border-gray-200 text-center hover:shadow-md transition cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-amber-50 text-amber-600 rounded-full flex items-center justify-center text-xl group-hover:bg-amber-500 group-hover:text-white transition">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">My Lucky Day</span>
+                    </div>
+                    <div @click="activeTab = 'sitemap'" class="bg-white p-5 rounded-lg border border-gray-200 text-center hover:shadow-md transition cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-blue-50 text-blue-700 rounded-full flex items-center justify-center text-xl group-hover:bg-blue-800 group-hover:text-white transition">
+                            <i class="fa-solid fa-sitemap"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">网站地图</span>
+                    </div>
+                    <div @click="window.open('https://xymusicjerryhoz.mysxl.cn/', '_blank')" class="bg-white p-5 rounded-lg border border-gray-200 text-center hover:shadow-md transition cursor-pointer group">
+                        <div class="w-12 h-12 mx-auto mb-3 bg-blue-50 text-blue-700 rounded-full flex items-center justify-center text-xl group-hover:bg-blue-800 group-hover:text-white transition">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <span class="text-sm font-medium text-gray-700">原始站点</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
 
-<section id="education" class="section">
-    <h2>教育</h2>
-    <p class="desc-lead">学习心得、科普知识、写作与科学实验记录板块</p>
-    <div class="grid">
-        <div class="card">
-            <h3>教育专栏</h3>
-            <p>学习、科学实验、诗词文章、社会思考汇总。</p>
-            <div class="content-block">
-                <p>本人自幼学习钢琴、声乐，接触相声主持，后期由音乐表演转向音乐研究。平时喜欢撰写诗词文章，也热衷于动手做科学实验。</p>
-                <p>关注社会现实，学习法学相关知识，思考社会治理，希望尽己所能帮助有需要的人。</p>
+        <!-- ================= 2. 教育与思想板块 (学习通卡片风) ================= -->
+        <div x-show="activeTab === 'edu'" class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex justify-between items-center">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-900"><i class="fa-solid fa-graduation-cap text-blue-800 mr-2"></i> 教育与思想 - 课程与学术中心</h2>
+                    <p class="text-xs text-gray-500 mt-1">涵盖基础教育、高等教育、职业教育、竞赛中心与思政大学堂（仿学习通网课UI样式）</p>
+                </div>
             </div>
-            <div class="download-wrap">
-                <h4>📂 学习资料下载</h4>
-                <a href="./files/学习笔记.docx" download="学习笔记.docx" class="btn">下载学习笔记</a>
+
+            <!-- 分类标签切换子菜单 -->
+            <div class="flex space-x-2 border-b pb-3 overflow-x-auto">
+                <button @click="eduSubTab = 'higher'" :class="eduSubTab === 'higher' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'" class="px-4 py-2 rounded text-sm font-medium cursor-pointer transition">高等教育 (天大 & 仁爱)</button>
+                <button @click="eduSubTab = 'basic'" :class="eduSubTab === 'basic' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'" class="px-4 py-2 rounded text-sm font-medium cursor-pointer transition">基础教育 (录播系列)</button>
+                <button @click="eduSubTab = 'other'" :class="eduSubTab === 'other' ? 'bg-blue-800 text-white' : 'bg-gray-100 text-gray-700'" class="px-4 py-2 rounded text-sm font-medium cursor-pointer transition">职业教育与思政专区</button>
+            </div>
+
+            <!-- 高等教育子板块 -->
+            <div x-show="eduSubTab === 'higher'" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- 天津仁爱学院卡片 -->
+                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden chaoxing-card">
+                        <div class="bg-blue-900 text-white p-4 font-bold flex justify-between items-center">
+                            <span>天津仁爱学院专区</span>
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div class="border-b pb-3">
+                                <h4 class="font-bold text-sm text-blue-900 mb-1">《“N+1”朋辈帮扶》第一部分</h4>
+                                <p class="text-xs text-gray-500 mb-2">25-26-2学期-学生自主学习辅导互助课程</p>
+                                <a href="https://mooc1.chaoxing.com/course-ans/courseportal/portal/QFBN8_UP9jtzX2GgAmrx0g==?edit=true" target="_blank" class="inline-block bg-blue-50 text-blue-700 hover:bg-blue-800 hover:text-white px-3 py-1.5 rounded text-xs font-medium transition">
+                                    <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> 进入学习通课程门户
+                                </a>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-blue-900 mb-1">《“N+1”朋辈帮扶》第二部分</h4>
+                                <p class="text-xs text-gray-500 mb-2">26-27-1学期-制药学生自主学习辅导互助课程</p>
+                                <a href="https://mooc1.chaoxing.com/course-ans/courseportal/portal/qDI5jKGyfJ1V9kz0GuJdpQ==?edit=true" target="_blank" class="inline-block bg-blue-50 text-blue-700 hover:bg-blue-800 hover:text-white px-3 py-1.5 rounded text-xs font-medium transition">
+                                    <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> 进入学习通课程门户
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 天津大学卡片 -->
+                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden chaoxing-card">
+                        <div class="bg-blue-800 text-white p-4 font-bold flex justify-between items-center">
+                            <span>天津大学专区</span>
+                            <i class="fa-solid fa-university"></i>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div class="border-b pb-3">
+                                <h4 class="font-bold text-sm text-blue-900 mb-1">化工热力学与计算</h4>
+                                <p class="text-xs text-gray-500 mb-2">涵盖彭-罗宾逊方程及VLE求解器</p>
+                                <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded text-xs">校级重点课程</span>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-blue-900 mb-1">学术英文写作</h4>
+                                <p class="text-xs text-gray-500 mb-2">科研论文规范与发表指导</p>
+                                <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded text-xs">研究生公共课</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 大学英语等级考试卡片 -->
+                    <div class="bg-white rounded-lg border border-gray-200 overflow-hidden chaoxing-card">
+                        <div class="bg-amber-600 text-white p-4 font-bold flex justify-between items-center">
+                            <span>大学英语等级考试 (CET)</span>
+                            <i class="fa-solid fa-language"></i>
+                        </div>
+                        <div class="p-5 space-y-4">
+                            <div class="border-b pb-3">
+                                <h4 class="font-bold text-sm text-blue-900 mb-1">剑指 CET-6 进阶训练</h4>
+                                <p class="text-xs text-gray-500 mb-2">听力、阅读与高分写作特训</p>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-blue-900 mb-1">声韵赛道（英语文化节）</h4>
+                                <p class="text-xs text-gray-500 mb-2">天津仁爱学院第二届英语文化节声韵赛道</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 基础教育子板块 -->
+            <div x-show="eduSubTab === 'basic'" class="space-y-6">
+                <div class="bg-white p-6 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-base text-blue-900 mb-2">基础教育 - 吴兆宇的课程录播系列</h3>
+                    <p class="text-xs text-gray-500 mb-4">收录个人整理的优质录播及基础教育辅导视频。</p>
+                    <a href="https://mooc1.chaoxing.com/course-ans/courseportal/portal/0g-MlnWTkQtqpfRuH-UEqA==?edit=true" target="_blank" class="inline-flex items-center bg-blue-800 text-white px-4 py-2 rounded text-sm hover:bg-blue-900 transition">
+                        <i class="fa-solid fa-play mr-2"></i> 访问学习通《吴兆宇的课程录播系列》门户
+                    </a>
+                </div>
+            </div>
+
+            <!-- 职业教育与思政专区 -->
+            <div x-show="eduSubTab === 'other'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-base text-blue-900 mb-2"><i class="fa-solid fa-shield-halved text-red-700 mr-2"></i> 思政大学堂</h3>
+                    <p class="text-xs text-gray-500 mb-3">《习近平新时代中国特色社会主义思想概论》、国家安全教育等核心思政课程。</p>
+                    <span class="text-xs bg-red-50 text-red-700 px-2 py-1 rounded">必修学分课程</span>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-gray-200">
+                    <h3 class="font-bold text-base text-blue-900 mb-2"><i class="fa-solid fa-medal text-amber-500 mr-2"></i> 竞赛中心</h3>
+                    <p class="text-xs text-gray-500 mb-3">学科竞赛、化工实验技能大赛、Unity虚拟仿真实验开发项目支持。</p>
+                    <span class="text-xs bg-amber-50 text-amber-700 px-2 py-1 rounded">创新实践中心</span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
 
-<section id="entertainment" class="section">
-    <h2>娱乐</h2>
-    <p class="desc-lead">音乐作品板块，内容来源 xymusicjerryhoz.mysxl.cn（小宇音乐）</p>
-    <div class="grid">
-        <div class="card">
-            <h3>音乐空间</h3>
-            <p>小宇音乐相关内容，音乐作品与个人生活感悟。</p>
-            <div class="content-block">
-                <p>小宇音乐（汕头市）有限公司，专注音乐相关创作与研究。作品入驻腾讯音乐、抖音音乐、网易云音乐等平台。</p>
-                <p>这里汇集音乐感悟、作品介绍，记录音乐路上的成长经历。</p>
+        <!-- ================= 3. 文娱与健康板块 ================= -->
+        <div x-show="activeTab === 'life'" class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold text-gray-900"><i class="fa-solid fa-gamepad text-blue-800 mr-2"></i> 文娱与健康中心</h2>
+                <p class="text-xs text-gray-500 mt-1">涵盖潮汕与传统文化、Minecraft社区、Steam游戏盒子及健康减肥养生模块</p>
             </div>
-            <a href="https://xymusicjerryhoz.mysxl.cn/" target="_blank" class="btn">访问原音乐官网</a>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- 文化模块 -->
+                <div class="bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+                    <h3 class="font-bold text-lg text-blue-900 border-b pb-2"><i class="fa-solid fa-landmark text-blue-800 mr-2"></i> 文化研究站</h3>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="hover:text-blue-800 cursor-pointer flex items-center"><i class="fa-solid fa-circle text-[6px] text-blue-800 mr-2"></i> 潮汕文化研究站（龙湖区、汕头特色传承）</li>
+                        <li class="hover:text-blue-800 cursor-pointer flex items-center"><i class="fa-solid fa-circle text-[6px] text-blue-800 mr-2"></i> 中国传统文化研究站（书法、道家经典）</li>
+                    </ul>
+                </div>
+
+                <!-- 娱乐模块 -->
+                <div class="bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+                    <h3 class="font-bold text-lg text-blue-900 border-b pb-2"><i class="fa-solid fa-dice text-amber-600 mr-2"></i> 娱乐与社区</h3>
+                    <div class="space-y-3 text-sm">
+                        <div>
+                            <span class="font-semibold text-gray-800">我的世界 (Minecraft) 社区</span>
+                            <div class="flex space-x-2 mt-1">
+                                <a href="https://minecraft.wiki/" target="_blank" class="bg-gray-100 hover:bg-gray-200 px-2.5 py-1 rounded text-xs text-gray-700">MC百科</a>
+                                <a href="https://pcl.resource.li/" target="_blank" class="bg-blue-50 text-blue-700 hover:bg-blue-800 hover:text-white px-2.5 py-1 rounded text-xs">PCL启动器下载</a>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-gray-800">Steam 游戏社区盒子</span>
+                            <p class="text-xs text-gray-500 mt-0.5">对接 Steam 游戏成就与社区动态交流。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 健康模块 -->
+                <div class="bg-white p-6 rounded-lg border border-gray-200 space-y-4">
+                    <h3 class="font-bold text-lg text-blue-900 border-b pb-2"><i class="fa-solid fa-heart-pulse text-red-600 mr-2"></i> 健康与养生</h3>
+                    <ul class="space-y-2 text-sm text-gray-700">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-green-600 mr-2"></i> 健身参考与肌肉增长指南</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-green-600 mr-2"></i> 科学健康减肥与BMI控制</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-green-600 mr-2"></i> 传统养生与日常饮食调理</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-</section>
 
-<footer>
-    &copy; 2026 吴兆宇
-</footer>
+        <!-- ================= 4. 实际与事务板块 ================= -->
+        <div x-show="activeTab === 'service'" class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold text-gray-900"><i class="fa-solid fa-briefcase text-blue-800 mr-2"></i> 实际与事务中心</h2>
+                <p class="text-xs text-gray-500 mt-1">政务服务、企业协助、志愿者行动及法律援助参考</p>
+            </div>
 
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="bg-white p-5 rounded-lg border border-gray-200 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto bg-blue-50 text-blue-800 rounded-full flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-building"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900">企业协助</h4>
+                    <p class="text-xs text-gray-500">协助家族商行（如财韵食品商行）数字化产品推介与合规管理。</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-200 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto bg-blue-50 text-blue-800 rounded-full flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-hands-helping"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900">志愿者行动</h4>
+                    <p class="text-xs text-gray-500">参与校园志愿服务、金南实验学校3月份主题帮扶活动。</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-200 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto bg-blue-50 text-blue-800 rounded-full flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-music"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900">音乐人协作中心</h4>
+                    <p class="text-xs text-gray-500">小宇音乐版权管理与潮汕本土原创音乐文化推广。</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg border border-gray-200 text-center space-y-3">
+                    <div class="w-12 h-12 mx-auto bg-blue-50 text-blue-800 rounded-full flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </div>
+                    <h4 class="font-bold text-gray-900">法律参考</h4>
+                    <p class="text-xs text-gray-500">普及网络安全法、《网信意见》及民商事法律合规指南。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 5. "My Lucky Day" 专区（含大日历、农历与倒计时） ================= -->
+        <div x-show="activeTab === 'lucky'" class="space-y-6">
+            <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-8 rounded-xl shadow-lg">
+                <div class="max-w-3xl">
+                    <span class="bg-amber-500 text-white text-xs px-3 py-1 rounded-full font-bold uppercase tracking-wider">Annual Personal Festival</span>
+                    <h2 class="text-3xl font-extrabold mt-3 mb-2">✨ My Lucky Day (每年 11 月 12 日)</h2>
+                    <p class="text-blue-200 text-sm leading-relaxed">
+                        It’s a personal festival for me to deliver a huge dream, which explains why I come and what I want. 
+                        在这里寄托宏大理想，明确前行方向。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 倒计时与大日历组件 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg border border-amber-200 shadow-sm text-center flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-2"><i class="fa-solid fa-hourglass-half text-amber-500 mr-2"></i> 距离下一个 11月12日 倒计时</h3>
+                        <p class="text-3xl font-black text-blue-900 my-4" x-text="countdownText">计算中...</p>
+                    </div>
+                    <p class="text-xs text-gray-400">“长期的坚持与坚定的意志，终将成就梦想。”</p>
+                </div>
+
+                <!-- 农历与重要时间大日历 -->
+                <div class="md:col-span-2 bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                    <h3 class="font-bold text-gray-900 mb-3 flex items-center"><i class="fa-solid fa-calendar-days text-blue-800 mr-2"></i> 重要时间与农历日历查询</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-blue-50 p-4 rounded border border-blue-100">
+                            <span class="font-bold text-blue-900 block mb-1">📅 公历当前日期</span>
+                            <span class="text-gray-700 font-mono" x-text="currentDateStr"></span>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded border border-amber-100">
+                            <span class="font-bold text-amber-900 block mb-1">🏮 传统节日与农历对照</span>
+                            <span class="text-gray-700">农历十月前后（岁末迎新，笃行致远）</span>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-xs text-gray-500 space-y-1">
+                        <p>• <strong>核心纪念日：</strong> 1月28日（确立伴侣关系纪念）</p>
+                        <p>• <strong>个人节日：</strong> 11月12日（My Lucky Day 宏大梦想日）</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4大核心梦想级别展示 -->
+            <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm space-y-6">
+                <h3 class="text-xl font-bold text-gray-900 border-l-4 border-amber-500 pl-3">The Huge Dream - 4 Basic Levels</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-5 rounded-lg bg-gray-50 border border-gray-200">
+                        <span class="bg-blue-800 text-white text-xs px-2.5 py-1 rounded font-bold">Level 1</span>
+                        <h4 class="font-bold text-gray-900 mt-2 mb-1">学术深造与院校梦想</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Have the further chance on learning professional knowledge (Be admitted to a university that offers what I wanna research, which is consistent with the request of My Hometown, My Country-China by NMPUAE).
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-lg bg-gray-50 border border-gray-200">
+                        <span class="bg-blue-800 text-white text-xs px-2.5 py-1 rounded font-bold">Level 2</span>
+                        <h4 class="font-bold text-gray-900 mt-2 mb-1">学术成果与深度研究</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Have my own academic achievements that allows me to do further research on the interests that I love.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-lg bg-gray-50 border border-gray-200">
+                        <span class="bg-blue-800 text-white text-xs px-2.5 py-1 rounded font-bold">Level 3</span>
+                        <h4 class="font-bold text-gray-900 mt-2 mb-1">强健体魄与意志锤炼</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Have my health and strong body by decreasing the BMI and increasing the muscle mass with strong will and longly continuation.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-lg bg-gray-50 border border-gray-200">
+                        <span class="bg-blue-800 text-white text-xs px-2.5 py-1 rounded font-bold">Level 4</span>
+                        <h4 class="font-bold text-gray-900 mt-2 mb-1">美好未来与真实社会生活</h4>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Have my truly lover to have a promising future and prepare for the real social life.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= 6. 网站地图 (在线思维导图视图) ================= -->
+        <div x-show="activeTab === 'sitemap'" class="space-y-6">
+            <div class="bg-white p-6 rounded-lg border border-gray-200 shadow-sm">
+                <h2 class="text-xl font-bold text-gray-900"><i class="fa-solid fa-sitemap text-blue-800 mr-2"></i> 网站地图与全景思维导图</h2>
+                <p class="text-xs text-gray-500 mt-1">直观展示本平台所有栏目、课程链接与资料分布结构</p>
+            </div>
+
+            <div class="bg-white p-8 rounded-lg border border-gray-200 shadow-sm font-mono text-sm space-y-4">
+                <div class="text-blue-900 font-bold text-base border-b pb-2"><i class="fa-solid fa-folder-tree mr-2"></i> 小吴要上天大 - 网站根目录结构</div>
+                <ul class="space-y-3 pl-4 border-l-2 border-blue-200 text-gray-700">
+                    <li>📁 <strong>首 页</strong> (个人档案、百科对照、核心快捷导航)</li>
+                    <li>📁 <strong>教育与思想</strong>
+                        <ul class="pl-6 mt-2 space-y-2 border-l border-gray-200 text-xs">
+                            <li>├── 📄 高等教育 (天津仁爱学院[N+1朋辈帮扶]、天津大学[化工热力学]、大学英语CET-6)</li>
+                            <li>├── 📄 基础教育 (吴兆宇的课程录播系列)</li>
+                            <li>├── 📄 职业教育与技能竞赛</li>
+                            <li>└── 📄 思政大学堂 (习近平新时代中国特色社会主义思想概论)</li>
+                        </ul>
+                    </li>
+                    <li>📁 <strong>文娱与健康</strong>
+                        <ul class="pl-6 mt-2 space-y-2 border-l border-gray-200 text-xs">
+                            <li>├── 📄 文化研究站 (潮汕文化、中国传统文化)</li>
+                            <li>├── 📄 娱乐社区 (Minecraft 社区与 PCL 启动器、Steam 游戏盒子)</li>
+                            <li>└── 📄 健康生活 (健身参考、减肥降BMI、养生饮食)</li>
+                        </ul>
+                    </li>
+                    <li>📁 <strong>实际与事务</strong>
+                        <ul class="pl-6 mt-2 space-y-2 border-l border-gray-200 text-xs">
+                            <li>├── 📄 企业协助 (财韵食品商行数字化推介)</li>
+                            <li>├── 📄 志愿者行动 (金南实验学校志愿服务)</li>
+                            <li>├── 📄 音乐人协作中心 (小宇音乐版权管理)</li>
+                            └── 📄 法律参考 (网络安全与民商事合规)
+                        </ul>
+                    </li>
+                    <li>📁 <strong>✨ My Lucky Day</strong> (每年11月12日宏大梦想规划、4大Level、大日历倒计时)</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-gray-800 text-gray-400 text-xs py-8 mt-12 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-10 text-center space-y-3">
+            <p>© 2026 Untholion Leen All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <!-- 前端逻辑脚本 -->
+    <script>
+        function portalApp() {
+            return {
+                activeTab: 'home',
+                eduSubTab: 'higher',
+                searchQuery: '',
+                currentDateStr: new Date().toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' }),
+                countdownText: '',
+
+                init() {
+                    this.updateCountdown();
+                    setInterval(() => this.updateCountdown(), 1000);
+                },
+
+                // 计算每年 11 月 12 日的倒计时
+                updateCountdown() {
+                    const now = new Date();
+                    let target = new Date(now.getFullYear(), 10, 12); // 10 代表 11月 (月份从0开始)
+                    if (now > target) {
+                        target.setFullYear(target.getFullYear() + 1);
+                    }
+                    const diff = target - now;
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const minutes = Math.floor((diff / 1000 / 60) % 60);
+                    const seconds = Math.floor((diff / 1000) % 60);
+                    this.countdownText = `${days} 天 ${hours} 小时 ${minutes} 分钟 ${seconds} 秒`;
+                },
+
+                // 站内检索跳转
+                performSearch() {
+                    if (!this.searchQuery.trim()) return;
+                    alert(`为您检索关键词：“${this.searchQuery}”。已在教育、文娱与事务板块为您匹配相关内容！`);
+                    this.searchQuery = '';
+                }
+            }
+        }
+    </script>
 </body>
 </html>
